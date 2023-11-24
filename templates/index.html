@@ -10,7 +10,10 @@
 <body>
     <div class="container">
         <h1>Welcome to the FastAPI Front Page</h1>
-        <p>This is a simple front page served using FastAPI, Jinja2 templates, and CSS.</p>
+        <form id="login-form" action="{{ login_form_action }}">
+          <h2>Sign in with your Google Account</h2>
+            <button type="submit" class="button">Login with Google</button>
+        </form>
     </div>
 </body>
 </html>
