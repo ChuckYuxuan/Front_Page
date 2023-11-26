@@ -28,6 +28,7 @@ CLIENT_ID = data.get("client_id")
 CLIENT_SECRET = data.get("client_secret")
 # OAUTH_URL = data.get("auth_uri")
 OAUTH_URL = "http://localhost:5001"
+
 sso = GoogleSSO(
     client_id=CLIENT_ID,
     client_secret=CLIENT_SECRET,
@@ -103,7 +104,31 @@ async def auth_callback(request: Request):
     access_token = create_access_token(
         data={"sub": user_info["email"]}, expires_delta=access_token_expires
     )
-    return {"access_token": access_token, "token_type": "bearer"}
+
+    api_gateway_url = "https://m1ydupxwfa.execute-api.us-east-2.amazonaws.com/deploy"
+    access_token = access_token.strip("'")
+    headers = {
+        'Authorization': f'Bearer {access_token}'
+    }
+    print(headers.get("access_token"))
+    response = requests.post(api_gateway_url, headers = headers)
+    print(response.text)
+    # Check if the Lambda function returned a redirect response
+    if response.status_code == 200:
+        # Extract the redirect URL from the Lambda function's response headers
+        redirect_url = response.headers.get("Location")
+
+        if redirect_url:
+            # Perform the redirection
+            return RedirectResponse(url=redirect_url)
+        else:
+            # Handle the case where the redirect URL is not provided
+            return {"error": "No redirect URL provided by the Lambda function"}
+    else:
+        # Handle other responses (e.g., error scenarios)
+        return {"error": "Unexpected response from the API gateway", "status_code": response.status_code}
+
+
 
 
 if __name__ == "__main__":
