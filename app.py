@@ -106,17 +106,26 @@ async def auth_callback(request: Request):
     )
 
     api_gateway_url = "https://m1ydupxwfa.execute-api.us-east-2.amazonaws.com/deploy"
-    access_token = access_token.strip("'")
+    # access_token = access_token.strip("'")
+
     headers = {
-        'Authorization': f'Bearer {access_token}'
+        "access_token": access_token,
+        "token_type": "bearer"
     }
-    print(headers.get("access_token"))
-    response = requests.post(api_gateway_url, headers = headers)
-    print(response.text)
+    headers = json.dumps(headers)
+    response = requests.post(api_gateway_url, data=headers)
+
     # Check if the Lambda function returned a redirect response
     if response.status_code == 200:
         # Extract the redirect URL from the Lambda function's response headers
-        redirect_url = response.headers.get("Location")
+        response_json = response.json()
+
+        status_code = response_json['statusCode']
+
+        if status_code == 403:
+            return {'statusCode': 403, 'body': json.dumps('User not authorized')}
+
+        redirect_url = response_json["headers"]["Location"]
 
         if redirect_url:
             # Perform the redirection
