@@ -50,7 +50,7 @@ def create_access_token(data: dict, expires_delta: Union[timedelta, None] = None
     if expires_delta:
         expire = datetime.utcnow() + expires_delta
     else:
-        expire = datetime.utcnow() + timedelta(minutes=15)
+        expire = datetime.utcnow() + timedelta(minutes=30)
     to_encode.update({"exp": expire})
     encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
     return encoded_jwt
@@ -107,13 +107,13 @@ async def auth_callback(request: Request):
 
     api_gateway_url = "https://m1ydupxwfa.execute-api.us-east-2.amazonaws.com/deploy"
     # access_token = access_token.strip("'")
-
+    print(access_token)
     headers = {
         "access_token": access_token,
         "token_type": "bearer"
     }
-    headers = json.dumps(headers)
-    response = requests.post(api_gateway_url, data=headers)
+
+    response = requests.post(api_gateway_url, headers = headers)
 
     # Check if the Lambda function returned a redirect response
     if response.status_code == 200:
