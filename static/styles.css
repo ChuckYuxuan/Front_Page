@@ -1,22 +1,51 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Arial', sans-serif;
     background-color: #f4f4f4;
     margin: 0;
-    padding: 0;
+    padding: 20px;
 }
 
 .container {
-    max-width: 800px;
-    margin: 50px auto;
+    max-width: 600px;
+    margin: auto;
+    background: white;
     padding: 20px;
-    background-color: #fff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    text-align: center;
 }
 
-h1 {
+#login-container, #button-container {
+    border: 1px solid #ddd;
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}
+
+h1, h2 {
     color: #333;
 }
 
-p {
-    color: #666;
+.button, .nice-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #007bff;
+    border: 1px solid #007bff;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 10px;
+    display: inline-block;
+    text-align: center;
+    width: 150px; /* Fixed width for consistent sizing */
+}
+
+.button:hover, .nice-button:hover {
+    background-color: #0056b3;
+}
+
+.button:active, .nice-button:active {
+    background-color: #004080;
+    border-color: #004080;
 }

@@ -5,15 +5,67 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/static/styles.css">
-    <title>FastAPI Front Page</title>
+    <title>Final Project Front Page</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        h1, h2 {
+            color: #333;
+        }
+
+        .nice-button {
+            padding: 10px 20px;
+            font-size: 16px;
+            color: white;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+            margin: 10px 0;
+        }
+
+        .nice-button:hover {
+            background-color: #0056b3;
+        }
+
+        .nice-button:active {
+            transform: scale(0.98);
+        }
+
+        #login-form {
+            border: 1px solid #ddd;
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
-        <h1>Welcome to the FastAPI Front Page</h1>
+        <h1>Welcome to the Virtual TA Front Page</h1>
         <form id="login-form" action="{{ login_form_action }}">
-          <h2>Sign in with your Google Account</h2>
-            <button type="submit" class="button">Login with Google</button>
+          <h2>Sign in with your Google Account to chat with bot</h2>
+            <button type="submit" class="nice-button">Login with Google</button>
         </form>
+        <button onclick="window.location.href='https://united-park-406303.ue.r.appspot.com/';" class="nice-button">Library</button>
+        <button onclick="window.location.href='http://ec2-18-222-85-31.us-east-2.compute.amazonaws.com:8000/';" class="nice-button">Dashboard</button>
+
     </div>
 </body>
 </html>

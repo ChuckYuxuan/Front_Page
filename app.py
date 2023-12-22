@@ -105,27 +105,29 @@ async def auth_callback(request: Request):
         data={"sub": user_info["email"]}, expires_delta=access_token_expires
     )
 
-    api_gateway_url = "https://m1ydupxwfa.execute-api.us-east-2.amazonaws.com/deploy"
+    api_gateway_url = "https://qv4m5jo0o1.execute-api.us-east-2.amazonaws.com/deploy"
     # access_token = access_token.strip("'")
-    print(access_token)
+    # print("access_token: ", access_token)
     headers = {
         "access_token": access_token,
         "token_type": "bearer"
     }
 
-    response = requests.post(api_gateway_url, headers = headers)
+    response = requests.post(api_gateway_url, headers=headers)
+
+    # print(response.text)
 
     # Check if the Lambda function returned a redirect response
     if response.status_code == 200:
         # Extract the redirect URL from the Lambda function's response headers
-        response_json = response.json()
+        # response_json = response.json()
+        #
+        # status_code = response_json['statusCode']
 
-        status_code = response_json['statusCode']
-
-        if status_code == 403:
+        if response.status_code == 403:
             return {'statusCode': 403, 'body': json.dumps('User not authorized')}
 
-        redirect_url = response_json["headers"]["Location"]
+        redirect_url = "http://ec2-3-139-62-68.us-east-2.compute.amazonaws.com:8013/"
 
         if redirect_url:
             # Perform the redirection
@@ -141,5 +143,5 @@ async def auth_callback(request: Request):
 
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="127.0.0.1", port=5001)
+    uvicorn.run(app, host="0.0.0.1", port=5001)
 
